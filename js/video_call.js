@@ -233,7 +233,7 @@ function generateAccessToken(userId) {
 
     const payload = {
         jti: `${API_SID_Key}_${timeStamp}`,
-        iss: "SK.0.6bdIEly76oHTiKHRrqqgLKQgKQPK1eWE",
+        iss: API_SID_Key,
         exp: timeStamp,
         userId: userId
       }
