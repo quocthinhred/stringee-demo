@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Stringee Video Call</title>
+        <meta charset="utf-8">
+
+        <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="https://cdn.stringee.com/sdk/web/latest/stringee-web-sdk.min.js"></script>
+        <script type="text/javascript" src="js/video_call.js"></script>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+
+    <body>
+        <div>
+            <textarea id="accessTokenArea" rows="6" cols="50" style="height: 130px; width: 600px; resize: none;">YOUR ACCESS TOKEN</textarea>
+            <br/>
+            <br/>
+            <button id="loginBtn">Login</button>
+            Logged in: <span id="loggedUserId" style="color: red">Not logged</span>
+        </div>
+
+        <div>
+            <br/>
+            <input id="callTo" type="text" name="toUsername" style="width: 200px;" placeholder="Call username" value="user_2">
+
+            <button disabled="" id="callBtn" onclick="testMakeCall(false)">Voice call</button>
+            <button disabled="" id="videoCallBtn" onclick="testMakeCall(true)">Video call</button>
+            <button disabled="" id="hangupBtn" onclick="testHangupCall()">Hangup</button>
+
+            <button disabled="" id="upgradeToVideoCallBtn" onclick="upgradeToVideoCall()">UpgradeToVideoCall</button>
+            <button disabled="" id="switchVoiceVideoBtn" onclick="switchVoiceVideoCall()">switchVoiceVideoCall</button>
+
+            <button disabled="" id="muteBtn" onclick="mute()">Mute</button>
+            <button disabled="" id="enableVideoBtn" onclick="enableVideo()">Enable/disable Video</button>
+        </div>
+
+        <div>
+            <br/>
+            Call status: <span id="callStatus" style="color: red">Not started</span>
+        </div>
+
+        <div id="incoming-call-div">
+            <br />
+            <button id="answerBtn" onclick="testAnswerCall()">Answer</button>
+            <button id="rejectBtn" onclick="testRejectCall()">Reject</button>
+        </div>
+
+        <div>
+            <video id="localVideo" playsinline autoplay muted style="width: 350px;background: #424141;"></video>
+            <video id="remoteVideo" playsinline autoplay style="width: 350px;background: #424141;"></video>
+        </div>
+
+    </body>
+
+</html>
