@@ -227,7 +227,7 @@ function generateAccessToken(userId) {
     const timeStamp = new Date().setTime(new Date().getTime() + 7200)
 
     const payload = {
-        jti: `${process.env.API_SID_Key}_${timeStamp}`,
+        jti: `${window.API_SID_Key}_${timeStamp}`,
         iss: "SK.0.6bdIEly76oHTiKHRrqqgLKQgKQPK1eWE",
         exp: timeStamp,
         userId: userId
@@ -241,7 +241,7 @@ function generateAccessToken(userId) {
     const tokenInfo = encodedHeader + '.' + encodedPayload;
 
     // Định nghĩa secret key để ký JWT
-    const secretKey = process.env.API_SECRET_Key;
+    const secretKey = window.API_SECRET_Key;
 
     // Ký JWT bằng cách mã hóa chuỗi thông tin giữa với secret key
     const signature = btoa(JSON.stringify(tokenInfo + secretKey));
