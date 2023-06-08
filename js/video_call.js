@@ -9,8 +9,9 @@ $(document).ready(function () {
 
     $('#loginBtn').on('click', function () {
         $('#loggedUserId').html('Connecting...');
-        var accessToken = $('#accessTokenArea').val();
-        console.log('accessToken...: ' + accessToken);
+        var username = $('#accessTokenArea').val();
+
+        var accessToken = generateAccessToken(username);
 
         stringeeClient = new StringeeClient();
 
@@ -34,14 +35,16 @@ function testRejectCall() {
         console.log('reject res', res);
         $('#incoming-call-div').hide();
     });
+
+
 }
 
 function testMakeCall(videocall) {
     console.log('make call, videocall: ' + videocall);
-//				var videoCall = false;
+    //				var videoCall = false;
     call = new StringeeCall(stringeeClient, fromNumber, $('#callTo').val(), videocall);
 
-//	call.videoResolution = {width: 1280, height: 720};
+    //	call.videoResolution = {width: 1280, height: 720};
 
     settingCallEvent(call);
 
@@ -78,11 +81,11 @@ function settingClientEvents(client) {
         call = incomingcall;
         settingCallEvent(incomingcall);
 
-//			call.videoResolution = {width: 1280, height: 720};
+        //			call.videoResolution = {width: 1280, height: 720};
 
         $('#incoming-call-div').show();
 
-        call.ringing(function (res) {});
+        call.ringing(function (res) { });
 
         console.log('++++++++++++++ incomingcall', incomingcall);
     });
@@ -160,7 +163,7 @@ function upgradeToVideoCall() {
 
 
 function switchVoiceVideoCall() {
-    var info = {requestVideo: true};
+    var info = { requestVideo: true };
 
     console.log('please using upgradeToVideoCall() method to enable/disable local video, send request enable video to "partner"');
 
@@ -210,4 +213,39 @@ function callEnded() {
     setTimeout(function () {
         $('#callStatus').html('Call ended');
     }, 1500);
+}
+
+
+
+function generateAccessToken(userId) {
+    const header = {
+        alg: 'HS256',
+        typ: 'JWT',
+        cty: "stringee-api;v=1"
+    };
+
+    const timeStamp = new Date().setTime(new Date().getTime() + 7200)
+
+    const payload = {
+        jti: `${process.env.API_SID_Key}_${timeStamp}`,
+        iss: "SK.0.6bdIEly76oHTiKHRrqqgLKQgKQPK1eWE",
+        exp: timeStamp,
+        userId: userId
+      }
+
+    // Biến đổi header và payload thành chuỗi Base64
+    const encodedHeader = btoa(JSON.stringify(header));
+    const encodedPayload = btoa(JSON.stringify(payload));
+
+    // Kết hợp header và payload để tạo chuỗi thông tin giữa
+    const tokenInfo = encodedHeader + '.' + encodedPayload;
+
+    // Định nghĩa secret key để ký JWT
+    const secretKey = process.env.API_SECRET_Key;
+
+    // Ký JWT bằng cách mã hóa chuỗi thông tin giữa với secret key
+    const signature = btoa(JSON.stringify(tokenInfo + secretKey));
+
+    // Tạo JWT bằng cách kết hợp chuỗi thông tin giữa và chữ ký
+    const jwtToken = tokenInfo + '.' + signature;
 }
