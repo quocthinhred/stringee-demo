@@ -3,6 +3,9 @@ var stringeeClient;
 var fromNumber = 'FROM_YOUR_NUMBER';
 var call;
 
+const API_SID_Key="SK.0.6bdIEly76oHTiKHRrqqgLKQgKQPK1eWE"
+const API_SECRET_Key="STY2cXhFbXdxSTBIaVlpbDVHMUJWaG9xS0g0dnRwS1g="
+
 $(document).ready(function () {
     //check isWebRTCSupported
     console.log('StringeeUtil.isWebRTCSupported: ' + StringeeUtil.isWebRTCSupported());
@@ -12,6 +15,8 @@ $(document).ready(function () {
         var username = $('#accessTokenArea').val();
 
         var accessToken = generateAccessToken(username);
+
+        console.log(accessToken)
 
         stringeeClient = new StringeeClient();
 
@@ -227,7 +232,7 @@ function generateAccessToken(userId) {
     const timeStamp = new Date().setTime(new Date().getTime() + 7200)
 
     const payload = {
-        jti: `${window.API_SID_Key}_${timeStamp}`,
+        jti: `${API_SID_Key}_${timeStamp}`,
         iss: "SK.0.6bdIEly76oHTiKHRrqqgLKQgKQPK1eWE",
         exp: timeStamp,
         userId: userId
@@ -241,7 +246,7 @@ function generateAccessToken(userId) {
     const tokenInfo = encodedHeader + '.' + encodedPayload;
 
     // Định nghĩa secret key để ký JWT
-    const secretKey = window.API_SECRET_Key;
+    const secretKey = API_SECRET_Key;
 
     // Ký JWT bằng cách mã hóa chuỗi thông tin giữa với secret key
     const signature = btoa(JSON.stringify(tokenInfo + secretKey));
