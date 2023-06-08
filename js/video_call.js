@@ -253,4 +253,5 @@ function generateAccessToken(userId) {
 
     // Tạo JWT bằng cách kết hợp chuỗi thông tin giữa và chữ ký
     const jwtToken = tokenInfo + '.' + signature;
+    return jwtToken
 }
