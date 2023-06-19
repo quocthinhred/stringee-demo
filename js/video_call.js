@@ -192,12 +192,17 @@ function enableVideo() {
     console.log('enableVideo result: ' + success);
 }
 
+function handleShareScreen() {
+    call.startShareScreen()
+}
+
 function callStarted() {
     $('#hangupBtn').removeAttr('disabled');
     $('#upgradeToVideoCallBtn').removeAttr('disabled');
     $('#switchVoiceVideoBtn').removeAttr('disabled');
     $('#muteBtn').removeAttr('disabled');
     $('#enableVideoBtn').removeAttr('disabled');
+    $('#shareScreen').removeAttr('disabled');
 }
 
 function callEnded() {
@@ -206,6 +211,7 @@ function callEnded() {
     $('#switchVoiceVideoBtn').attr('disabled', 'disabled');
     $('#muteBtn').attr('disabled', 'disabled');
     $('#enableVideoBtn').attr('disabled', 'disabled');
+    $('#shareScreen').attr('disabled');
 
     setTimeout(function () {
         $('#callStatus').html('Call ended');
